@@ -21,6 +21,8 @@ limitations under the License.
   <link rel="import" href="bower_components/cast-manager-polymer/cast-manager.html">
   <link rel="import"
         href="bower_components/cast-video-polymer/cast-video.html">
+        <link rel="import"
+        href="bower_components/cast-controller-bar-polymer/cast-controller-bar.html">
  
   <style>
     cast-video {
@@ -41,6 +43,7 @@ limitations under the License.
                   cast-available="{{castAvailable}}"
                   connection-status="{{connectionStatus}}"
                   show-spinner="{{showSpinner}}"
+                  has-cast-media="{{hasCastMedia}}"
                   cast-device-name="{{castDeviceName}}">
       <cast-video id="video"
                         local-media="{{localMedia}}"
@@ -51,6 +54,16 @@ limitations under the License.
                         connection-status="[[connectionStatus]]"
                         show-spinner="[[showSpinner]]"
                         cast-device-name="[[castDeviceName]]"></cast-video>
+      <div style="min-height:1080px;"></div>
+      <cast-controller-bar volume="[[volume]]"
+         local-media="[[localMedia]]"
+         cast-available="[[castAvailable]]"
+         connection-status="[[connectionStatus]]"
+         has-cast-media="[[hasCastMedia]]"
+         cast-device-name="[[castDeviceName]]"
+         current-time="[[currentTime]]"
+         video-element="video"
+         scroll-element="body"></cast-controller-bar>
     </cast-manager>
   </template>
   <script>
