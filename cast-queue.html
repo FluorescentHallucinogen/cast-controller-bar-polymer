@@ -303,6 +303,7 @@ Example:
        * @param sender
        */
       _dropHandler: function (event) {
+        event.preventDefault();
         //remove all borders
         event.currentTarget.classList.remove('border-left');
         event.currentTarget.classList.remove('border-right');
