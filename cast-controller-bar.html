@@ -173,6 +173,14 @@ Example:
         visibleDuration: {
           type: Number,
           value: 2000
+        },
+
+        /**
+         * Boolean to keep track of whether or not to show the queue element.
+         */
+        isQueueShown: {
+          type: Boolean,
+          value: false
         }
       },
       /**
@@ -206,10 +214,8 @@ Example:
        */
       _maximized: false,
 
-      /**
-       * Boolean to keep track of whether or not to show the queue element.
-       */
-      _showQueueElement: false,
+
+
 
       /**
        * Boolean to keep track if the bar is peeking or not
@@ -239,7 +245,7 @@ Example:
           this._hideHandle = null;
           this._isPeeking = false;
 
-          if (this._showControllerElement || this._showQueueElement) {
+          if (this._showControllerElement || this.isQueueShown) {
             this.maximize();
           }
         }.bind(this));
@@ -311,7 +317,7 @@ Example:
        * Shows the queue element
        */
       showQueue: function () {
-        this._showQueueElement = true;
+        this.isQueueShown = true;
         if (this._maximized) {
           this.$.queue.setWidth(this._calculateQueueWidth());
           this.$.queue.maximize();
@@ -324,7 +330,7 @@ Example:
        * Hides the queue element
        */
       hideQueue: function () {
-        this._showQueueElement = false;
+        this.isQueueShown = false;
         this.$.queue.hide();
         this.$.queue.resetWidth();
       },
@@ -347,7 +353,7 @@ Example:
        */
       maximize: function () {
         this._maximized = true;
-        if (this._showQueueElement) {
+        if (this.isQueueShown) {
           this.$.queue.setWidth(this._calculateQueueWidth());
           this.$.queue.maximize();
         }
@@ -361,7 +367,7 @@ Example:
        */
       minimize: function () {
         this._maximized = false;
-        if (this._showQueueElement) {
+        if (this.isQueueShown) {
           this.$.queue.resetWidth();
           this.$.queue.minimize();
         }
@@ -389,7 +395,7 @@ Example:
       _mediaActionHandler: function (e, data, sender) {
         switch (data.action) {
           case 'toggleQueueElement':
-            if (this._showQueueElement) {
+            if (this.isQueueShown) {
               this.hideQueue();
             } else if(this.queueEnabled) {
               this.showQueue();
@@ -422,7 +428,7 @@ Example:
        * Briefly displays the queue and then auto hides it when changes to the queue are made
        */
       _peek: function() {
-        if (this.queueEnabled && !this._showQueueElement && !this._showControllerElement) {
+        if (this.queueEnabled && !this.isQueueShown && !this._showControllerElement) {
           this._isPeeking = true;
           this.showQueue();
           this._setHideTimeout();
